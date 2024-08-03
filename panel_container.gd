@@ -49,11 +49,11 @@ func check_for_object_below():
 			var control_global_rect = control.get_global_rect()
 			if control_global_rect.has_point(mouse_pos):
 				
-				print("Mouse is over: ", control.name)
+#				print("Mouse is over: ", control.name)
 				at_row =  int(control.name.split("-")[0])
 				at_col = int(control.name.split("-")[1])
 				
-				print("==> ", at_row, " | ", at_col)
+#				print("==> ", at_row, " | ", at_col)
 				
 				req_row = self.get_child(0).get_child_count()
 				req_col = 0
@@ -63,12 +63,12 @@ func check_for_object_below():
 					for j in self.get_child(0).get_child(i).get_child_count():
 						req_col = max(req_col, j+1)
 				
-				print("req_row: ", req_row, " | req_col: ", req_col)
+#				print("req_row: ", req_row, " | req_col: ", req_col)
 				
 				mid_row = (req_row / 2) 
 				mid_col = (req_col / 2) 
 				
-				print("RC: ", mid_row, " ", mid_col)
+#				print("RC: ", mid_row, " ", mid_col)
 				
 				is_possible = false
 				
@@ -77,29 +77,39 @@ func check_for_object_below():
 				
 				#up 
 				if at_row - mid_row >= 0:
-					print("up")
+#					print("up")
 					direction_count += 1
 				
 				#down 
 				if at_row + (req_row - mid_row - 1) < max_row:
-					print("down")
+#					print("down")
 					direction_count += 1
 					
 				#left 
 				if at_col - mid_col >= 0:
-					print("left")
+#					print("left")
 					direction_count += 1
 					
 				#right
 				if at_col + (req_col - mid_col - 1) < max_col:
-					print("right")
+#					print("right")
 					direction_count += 1
 				
-				print("Direction Count: ", direction_count)
+#				print("Direction Count: ", direction_count)
 				if direction_count == 4:
 					is_possible = true
 					
-				print("Is_Possible: ", is_possible)
+					
+				var start_row = at_row - mid_row
+				var start_col = at_col - mid_col
+				
+				if is_possible:
+					for i in req_row:
+						for j in req_col:
+							if grid_2d[start_row + i][start_col + j].get_child_count() > 0:
+								is_possible = false
+				
+#				print("Is_Possible: ", is_possible)
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -123,8 +133,6 @@ func _on_gui_input(event):
 					for j in req_col:
 						if !self.get_child(0).get_child(i).get_child(j).is_in_group("empty"):
 							var default_grid = preload("res://Scenes/default_grid.tscn").instantiate()
-							default_grid.modulate = Color.PINK
 							grid_2d[start_row+i][start_col+j].add_child(default_grid)
-							print(grid_2d[start_row+i][start_col+j])
 						
 				self.queue_free()
