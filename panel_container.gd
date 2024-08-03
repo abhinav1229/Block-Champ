@@ -58,26 +58,20 @@ func check_for_object_below():
 				req_row = self.get_child(0).get_child_count()
 				req_col = 0
 				
+				
 				for i in req_row:
 					for j in self.get_child(0).get_child(i).get_child_count():
 						req_col = max(req_col, j+1)
 				
-				mid_row = (req_row / 2) - (1 if req_row % 2 == 0 else 0)
-				mid_col = (req_col / 2) - (1 if req_col % 2 == 0 else 0)
+				print("req_row: ", req_row, " | req_col: ", req_col)
+				
+				mid_row = (req_row / 2) 
+				mid_col = (req_col / 2) 
 				
 				print("RC: ", mid_row, " ", mid_col)
 				
 				is_possible = false
 				
-#				var row_frog = 0
-#				var col_frog = 0
-#
-#				if req_row % 2 != 0:
-#					row_frog = 1
-#
-#				if req_col % 2 != 0:
-#					col_frog = 1
-					
 				# to check the possibility
 				var direction_count = 0
 				
@@ -87,7 +81,7 @@ func check_for_object_below():
 					direction_count += 1
 				
 				#down 
-				if at_row + (req_row - mid_row ) < max_row:
+				if at_row + (req_row - mid_row - 1) < max_row:
 					print("down")
 					direction_count += 1
 					
@@ -97,8 +91,7 @@ func check_for_object_below():
 					direction_count += 1
 					
 				#right
-				print("rt::: ", at_col, " ", req_col, " ", mid_col, " ", at_col + (req_col - mid_col))
-				if at_col + (req_col - mid_col ) < max_col:
+				if at_col + (req_col - mid_col - 1) < max_col:
 					print("right")
 					direction_count += 1
 				
@@ -122,14 +115,16 @@ func _on_gui_input(event):
 			old_position = Vector2(0, 0)
 			
 			# fill the object in that space
-#			if is_possible:
-#				var start_row = at_row - mid_row - (1 if req_row % 2 != 1 else 0)
-#				var start_col = at_col - mid_col - (1 if req_col % 2 != 1 else 0)
-#
-#				for i in req_row:
-#					for j in req_col:
-#						print("-> ", (start_row+i), " | ", (start_col+j))
-#						var default_grid = preload("res://Scenes/default_grid.tscn").instantiate()
-#						default_grid.modulate = Color.PINK
-#						grid_2d[start_row+i][start_col+j].add_child(default_grid)
-#						print(grid_2d[start_row+i][start_col+j])
+			if is_possible:
+				var start_row = at_row - mid_row
+				var start_col = at_col - mid_col
+
+				for i in req_row:
+					for j in req_col:
+						if !self.get_child(0).get_child(i).get_child(j).is_in_group("empty"):
+							var default_grid = preload("res://Scenes/default_grid.tscn").instantiate()
+							default_grid.modulate = Color.PINK
+							grid_2d[start_row+i][start_col+j].add_child(default_grid)
+							print(grid_2d[start_row+i][start_col+j])
+						
+				self.queue_free()
