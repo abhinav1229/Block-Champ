@@ -1,0 +1,15 @@
+#up 
+				if at_row > 0 and at_row - mid_row >= 0:
+					direction_count += 1
+				
+				#down 
+				if at_row < max_row - 1 and at_row + (req_row - mid_row - 1) < max_row:
+					direction_count += 1
+					
+				#left 
+				if at_col > 0 and at_col - mid_col >= 0:
+					direction_count += 1
+					
+				#right
+				if at_col < max_col - 1 and at_col + (req_col - mid_col - 1) < max_col:
+					direction_count += 1

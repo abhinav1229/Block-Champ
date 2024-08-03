@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvpyr1ou5roib"]
+
+[ext_resource type="Texture2D" uid="uid://cnfoqgxqefpxu" path="res://61x61-f1f1f2ff.png" id="1_indai"]
+
+[node name="TextureRect" type="TextureRect"]
+modulate = Color(0.635294, 0.635294, 0.635294, 1)
+texture = ExtResource("1_indai")
