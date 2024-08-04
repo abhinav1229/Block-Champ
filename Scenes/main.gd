@@ -1,6 +1,5 @@
 extends Control
 
-
 var shapes_list:Array = [
 	[[1]], 
 	[[1, 1]],
@@ -50,10 +49,26 @@ func _ready():
 	set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer1)
 	set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer2)
 	set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer3)
+
+var puzzle_piece_drop_available = 3
+
+func set_answer_with_parent():
+	puzzle_piece_drop_available -= 1
+	
+	if puzzle_piece_drop_available == 0:
+		puzzle_piece_drop_available = 3
+		set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer1)
+		set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer2)
+		set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer3)
+	
+#func check_clear_row_col():
+#	for i in 10:
+#		for j in 10:
+#			main_game_grid.get_child((10 * i + 1) + j)
 	
 func set_answer(parent):
 	var panel_container = preload("res://panel_container.tscn").instantiate()
-	
+	panel_container.connect("on_piece_place", Callable(self, "set_answer_with_parent"))
 	var shape:Array = shapes_list.pick_random()
 
 	var shape_grid := VBoxContainer.new()

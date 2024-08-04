@@ -8,6 +8,8 @@ var max_row = 10
 var max_col = 10
 var grid_2d = []
 
+signal on_piece_place()
+
 func _ready():
 	set_process(true)
 	# Initialize the list with your controls
@@ -157,3 +159,37 @@ func _on_gui_input(event):
 							grid_2d[start_row+i][start_col+j].add_child(default_grid)
 						
 				self.queue_free()
+				
+				for i in req_row:
+					for j in req_col:
+						if !self.get_child(0).get_child(i).get_child(j).is_in_group("empty"):
+							
+							var is_all_row_filled = true 
+							var is_all_col_filled = true  
+							
+							for k in max_row:
+								if grid_2d[start_row+i][k].get_child_count() == 0:
+									is_all_row_filled = false 
+									
+							for k in max_col:
+								if grid_2d[k][start_col+j].get_child_count() == 0:
+									is_all_col_filled = false 
+								
+								
+							print("=> ", is_all_row_filled, " | ", is_all_col_filled)
+							if is_all_row_filled:
+								print("all row filled")
+								for k in max_row:
+									grid_2d[start_row+i][k].get_child(0).queue_free()
+									
+							if is_all_col_filled:
+								print("all col filled")
+								for k in max_col:
+									grid_2d[k][start_col+j].get_child(0).queue_free()
+							
+				emit_signal("on_piece_place")
+				
+#func clear_row_col():
+#	for i in max_row:
+#		for j in max_col:
+#			grid_2d[i][j]
