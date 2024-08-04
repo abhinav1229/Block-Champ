@@ -44,6 +44,10 @@ func check_for_object_below():
 	var mouse_pos = get_global_mouse_position()
 	is_possible = false
 	
+	for i in max_row:
+		for j in max_col:
+			grid_2d[i][j].modulate = Color.GRAY
+	
 	for control in controls:
 		if control is Control:
 			var control_global_rect = control.get_global_rect()
@@ -64,6 +68,7 @@ func check_for_object_below():
 						req_col = max(req_col, j+1)
 				
 #				print("req_row: ", req_row, " | req_col: ", req_col)
+		
 				
 				mid_row = (req_row / 2) 
 				mid_col = (req_col / 2) 
@@ -103,13 +108,26 @@ func check_for_object_below():
 				var start_row = at_row - mid_row
 				var start_col = at_col - mid_col
 				
+#				print("start: r: ", start_row, " | c: ",start_col)
+				
+#				print("Is_Possible1: ", is_possible)
+				
 				if is_possible:
 					for i in req_row:
 						for j in req_col:
-							if grid_2d[start_row + i][start_col + j].get_child_count() > 0:
-								is_possible = false
+							if grid_2d[start_row + i][start_col + j].get_child_count() == 0:
+								continue
+							else:
+								if !self.get_child(0).get_child(i).get_child(j).is_in_group("empty"):
+									is_possible = false
+
+				if is_possible:
+					for i in req_row:
+						for j in req_col:
+							if !self.get_child(0).get_child(i).get_child(j).is_in_group("empty"):
+								grid_2d[start_row+i][start_col+j].modulate = Color.HOT_PINK
 				
-#				print("Is_Possible: ", is_possible)
+#				print("Is_Possible2: ", is_possible)
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -128,11 +146,14 @@ func _on_gui_input(event):
 			if is_possible:
 				var start_row = at_row - mid_row
 				var start_col = at_col - mid_col
-
+				
+#				print("final: ", start_row, " | ", start_col)
+				
 				for i in req_row:
 					for j in req_col:
 						if !self.get_child(0).get_child(i).get_child(j).is_in_group("empty"):
 							var default_grid = preload("res://Scenes/default_grid.tscn").instantiate()
+							grid_2d[start_row+i][start_col+j].modulate = Color.GRAY
 							grid_2d[start_row+i][start_col+j].add_child(default_grid)
 						
 				self.queue_free()
