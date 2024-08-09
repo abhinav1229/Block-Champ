@@ -49,6 +49,8 @@ func _ready():
 	set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer1)
 	set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer2)
 	set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer3)
+	
+	
 
 var puzzle_piece_drop_available = 3
 
@@ -61,13 +63,15 @@ func set_answer_with_parent():
 		set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer2)
 		set_answer($QuestionGridContainer/VBoxContainer/ShapeContainer3)
 	
-#func check_clear_row_col():
-#	for i in 10:
-#		for j in 10:
-#			main_game_grid.get_child((10 * i + 1) + j)
 	
+#func fofo():
+#	print("fofo")
+	
+var panel_cnt_count = 0
 func set_answer(parent):
 	var panel_container = preload("res://panel_container.tscn").instantiate()
+	panel_cnt_count += 1
+	panel_container.name = "shape" + str(panel_cnt_count)
 	panel_container.connect("on_piece_place", Callable(self, "set_answer_with_parent"))
 	var shape:Array = shapes_list.pick_random()
 
