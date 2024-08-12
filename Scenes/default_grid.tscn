@@ -1,7 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://byq5t7s83xelf"]
 
-[ext_resource type="Texture2D" uid="uid://cnfoqgxqefpxu" path="res://61x61-f1f1f2ff.png" id="1_odghy"]
+[ext_resource type="Texture2D" uid="uid://d1xvd8ne0f12s" path="res://61x61-f1f1f2ffr5.png" id="1_1kvv7"]
 
 [node name="TextureRect" type="TextureRect"]
-modulate = Color(0.0862745, 0.0862745, 0.0901961, 1)
-texture = ExtResource("1_odghy")
+modulate = Color(0, 0, 0, 1)
+offset_right = 61.0
+offset_bottom = 61.0
+tooltip_text = "<null>"
+texture = ExtResource("1_1kvv7")
