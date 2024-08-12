@@ -36,10 +36,13 @@ var shapes_list:Array = [
 	[[1,1,1],[1,1,1],[1,1,1]]
 ]
 
+@onready var score_value = $ScoreBoard/MarginContainer/VBoxContainer/HBoxContainer/ScoreValue
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$GameOver.connect("game_start_now", Callable(self, "start_game"))
+	score_value.text = "0"
+	
 	for i in 10:
 		for j in 10:
 			print("yoo: ", i, " ", j)
@@ -55,6 +58,7 @@ func _ready():
 func clear_game():
 	print("clearing game")
 	$GameOver.visible = false
+	score_value.text = "0"
 	
 	var grid_container = $AnswerPanelContainer/GridContainer2
 	

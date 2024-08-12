@@ -3,5 +3,5 @@
 [ext_resource type="Texture2D" uid="uid://cnfoqgxqefpxu" path="res://61x61-f1f1f2ff.png" id="1_odghy"]
 
 [node name="TextureRect" type="TextureRect"]
-modulate = Color(0.0823529, 0.0823529, 0.0823529, 1)
+modulate = Color(0.0862745, 0.0862745, 0.0901961, 1)
 texture = ExtResource("1_odghy")

@@ -195,9 +195,11 @@ func _on_gui_input(event):
 				
 #				print("final: ", start_row, " | ", start_col)
 				
+				var _score = 0
 				for i in req_row:
 					for j in req_col:
 						if !self.get_child(0).get_child(i).get_child(j).is_in_group("empty"):
+							_score += 1
 							var default_grid = preload("res://Scenes/default_grid.tscn").instantiate()
 							grid_2d[start_row+i][start_col+j].modulate = Color.GRAY
 							grid_2d[start_row+i][start_col+j].add_child(default_grid)				
@@ -220,15 +222,20 @@ func _on_gui_input(event):
 								
 								
 							if is_all_row_filled:
+								_score += 10
 								for k in max_row:
 									grid_2d[start_row+i][k].get_child(0).queue_free()
 									
 							if is_all_col_filled:
+								_score += 10
 								for k in max_col:
 									grid_2d[k][start_col+j].get_child(0).queue_free()
 				
 				emit_signal("on_piece_place")
 				emit_signal("gameover")
+				
+				var currentScore = int(get_tree().get_nodes_in_group("score")[0].text)
+				get_tree().get_nodes_in_group("score")[0].text = str(currentScore + _score)
 				
 				self.queue_free()
 				await get_tree().process_frame 
